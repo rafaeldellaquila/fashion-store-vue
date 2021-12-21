@@ -12,13 +12,17 @@ const routes = [
     path: '/basket',
     name: 'Basket',
     component: Basket
-  },
-  
+  }
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  document.title = 'Clothes Store'
+  next()
 })
 
 export default router
