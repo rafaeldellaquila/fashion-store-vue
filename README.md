@@ -1,6 +1,6 @@
 # E-commerce Shopping Bag
 
-e-commerce/basket page in vue.js and vuex
+🛍️ e-commerce/basket page in vue.js and vuex
 
 ## Project setup
 
