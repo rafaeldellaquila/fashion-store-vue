@@ -1,44 +1,43 @@
 <template>
   <div class="home">
-    <div class="products" >
+    <div class="products">
       <div
         class="product"
-        :class="{inBag : isInBag(product)}"
-        v-for="(product, index)  in  this.products"
-        :key="index">
+        :class="{ inBag: isInBag(product) }"
+        v-for="(product, index) in this.products"
+        :key="index"
+      >
         <div
           class="product-image"
-          :style="{backgroundImage: 'url(' + product.image + ')'}"
+          :style="{ backgroundImage: 'url(' + product.image + ')' }"
         ></div>
-        <h4>{{product.title}}</h4>
-        <p class="price">US${{product.price.toFixed(2)}}</p>
-        <button v-if="!isInBag(product)" @click="addToBag(product)">Add to Basket</button>
-        <button v-else class="remove" @click="removeFromBag(product)">Remove from Basket</button>
+        <h4>{{ product.title }}</h4>
+        <p class="price">US$ {{ product.price.toFixed(2) }}</p>
+        <button v-if="!isInBag(product)" @click="addToBag(product)">
+          Add to Basket
+        </button>
+        <button v-else class="remove" @click="removeFromBag(product)">
+          Remove from Basket
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'Home',
   data() {
-    return {
-
-    }
+    return {}
   },
-  computed: {
-    products() {
-      return this.$store.state.products
-    },
 
-    productsInBag() {
-      return this.$store.state.productsInBag
-    }
-  },
+  computed: mapState(['products', 'productsInBag']),
+
   methods: {
     addToBag(product) {
-      product.quantity = 1;
+      product.quantity = 1
       this.$store.dispatch('addToBag', product)
     },
 
@@ -47,9 +46,8 @@ export default {
     },
 
     isInBag(product) {
-      return this.productsInBag.find(item => item.id == product.id)
+      return this.productsInBag.find((item) => item.id == product.id)
     }
-
   }
 }
 </script>

@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
+
 export default createStore({
   state: {
     products: [],
@@ -15,23 +16,27 @@ export default createStore({
     },
 
     removeFromBag(state, productId) {
-      const updatedBag = state.productsInBag.filter(item => productId != item.id)
+      const updatedBag = state.productsInBag.filter(
+        (item) => productId != item.id
+      )
       state.productsInBag = updatedBag
     }
   },
   actions: {
-    loadProducts({commit}) {
+    loadProducts({ commit }) {
       axios.get('https://fakestoreapi.com/products').then((res) => {
         commit('loadProducts', res.data)
       })
     },
 
-    addToBag({commit},  product) {
+    addToBag({ commit }, product) {
       commit('addToBag', product)
     },
 
-    removeFromBag({commit},  productId) {
-      commit('removeFromBag', productId)
+    removeFromBag({ commit }, productId) {
+      if (confirm('Are you sure you want to remove the item from bag?')) {
+        commit('removeFromBag', productId)
+      }
     }
   },
   modules: {}
