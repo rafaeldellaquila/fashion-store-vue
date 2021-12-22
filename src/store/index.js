@@ -11,8 +11,13 @@ export default createStore({
       state.products = products
     },
 
+    loadBag(state, products) {
+      state.products = products
+    },
+
     addToBag(state, product) {
       state.productsInBag.push(product)
+      localStorage.setItem('productsInBag', JSON.stringify(state.productsInBag))
     },
 
     removeFromBag(state, productId) {
@@ -20,6 +25,7 @@ export default createStore({
         (item) => productId != item.id
       )
       state.productsInBag = updatedBag
+      localStorage.setItem('productsInBag', JSON.stringify(state.productsInBag))
     }
   },
   actions: {
@@ -27,6 +33,12 @@ export default createStore({
       axios.get('https://fakestoreapi.com/products').then((res) => {
         commit('loadProducts', res.data)
       })
+    },
+
+    loadBag({ commit }) {
+      if (localStorage.getItem('productsInBag')) {
+        commit('loadBag', JSON.parse(localStorage.getItem('productsInBag')))
+      }
     },
 
     addToBag({ commit }, product) {
